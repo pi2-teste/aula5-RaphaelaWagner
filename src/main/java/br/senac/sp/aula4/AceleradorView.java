@@ -21,13 +21,14 @@ import javax.swing.KeyStroke;
 public class AceleradorView extends javax.swing.JFrame {
 
     public Carro meuCarro = new Carro();
+
     /**
      * Construtor -Inicializo o formul[ario
      */
     public AceleradorView() {
         initComponents();
         setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -44,14 +45,15 @@ public class AceleradorView extends javax.swing.JFrame {
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         btnAcelerar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnFrear = new javax.swing.JButton();
         titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Piloto Automático");
 
-        lblVelocidadeAtual.setText("lblVelocidadeAtual");
+        lblVelocidadeAtual.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblVelocidadeAtual.setText("0");
 
         jTextField1.setToolTipText("Valor a acelerar");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -73,8 +75,13 @@ public class AceleradorView extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seta-baixo.png"))); // NOI18N
-        jButton2.setText("btnFrear");
+        btnFrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/seta-baixo.png"))); // NOI18N
+        btnFrear.setText("btnFrear");
+        btnFrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFrearActionPerformed(evt);
+            }
+        });
 
         titulo.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         titulo.setText("Defina um valor para o piloto automático");
@@ -92,13 +99,13 @@ public class AceleradorView extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
                     .addComponent(lblVelocidadeAtual))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAcelerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnFrear, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(jTextField1))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -122,7 +129,7 @@ public class AceleradorView extends javax.swing.JFrame {
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(lblVelocidadeAtual)
-                    .addComponent(jButton2)
+                    .addComponent(btnFrear)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
@@ -133,16 +140,42 @@ public class AceleradorView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAcelerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcelerarActionPerformed
-    if(jTextField1.getText().trim().equals("")){}
-    else jTextField1.getText();
-    
+        int velocidade;
+        int valorconvertido = 0;
+        if (jTextField1.getText().trim().equals("")) {
+            meuCarro.acelelar();
+        } else {
+            String valorpreenchido = jTextField1.getText();
+            valorconvertido = Integer.parseInt(valorpreenchido);
+            meuCarro.acelelar(valorconvertido);
+            
+        }
+        velocidade = meuCarro.getVelocidadeAtual();
+        lblVelocidadeAtual.setText(Integer.toString(velocidade));
+                
+
 // TODO add your handling code here:
     }//GEN-LAST:event_btnAcelerarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void btnFrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrearActionPerformed
+        int velocidade;
+        int valorconvertido = 0;
+        if (jFormattedTextField1.getText().trim().equals("")) {
+            meuCarro.frear();
+        } else {
+            String valorpreenchido = jFormattedTextField1.getText();
+            valorconvertido = Integer.parseInt(valorpreenchido);
+            meuCarro.frear(valorconvertido);
+            
+        }
+        velocidade = meuCarro.getVelocidadeAtual();
+        lblVelocidadeAtual.setText(Integer.toString(velocidade));
+    }//GEN-LAST:event_btnFrearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,7 +190,7 @@ public class AceleradorView extends javax.swing.JFrame {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    
+
                     break;
                 }
             }
@@ -185,7 +218,7 @@ public class AceleradorView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAcelerar;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnFrear;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
